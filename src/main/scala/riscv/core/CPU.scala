@@ -19,7 +19,7 @@ class CPU extends Module {
   val wb         = Module(new WriteBack)
 
   io.deviceSelect := mem.io.memory_bundle
-    .address(Parameters.AddrBits - 1, Parameters.AddrBits - Parameters.SlaveDeviceCountBits)
+    .address(Parameters.AddrBits - 1, Parameters.AddrBits - Parameters.SlaveDeviceCountBits)//從最高位到扣掉外部設備數量，來去分配
 
   inst_fetch.io.jump_address_id       := ex.io.if_jump_address
   inst_fetch.io.jump_flag_id          := ex.io.if_jump_flag
@@ -39,7 +39,13 @@ class CPU extends Module {
   id.io.instruction := inst_fetch.io.instruction
 
   // lab3(cpu) begin
-
+  ex.io.instruction         := inst_fetch.io.instruction
+  ex.io.instruction_address := inst_fetch.io.instruction_address
+  ex.io.reg1_data           := regs.io.read_data1
+  ex.io.reg2_data           := regs.io.read_data2
+  ex.io.immediate           := id.io.ex_immediate
+  ex.io.aluop1_source       := id.io.ex_aluop1_source
+  ex.io.aluop2_source       := id.io.ex_aluop2_source
   // lab3(cpu) end
 
   mem.io.alu_result          := ex.io.mem_alu_result
