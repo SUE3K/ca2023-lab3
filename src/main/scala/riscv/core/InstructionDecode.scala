@@ -145,7 +145,7 @@ class InstructionDecode extends Module {
   val rs1    = io.instruction(19, 15)
   val rs2    = io.instruction(24, 20)
 
-  io.regs_reg1_read_address := Mux(opcode === Instructions.lui, 0.U(Parameters.PhysicalRegisterAddrWidth), rs1)
+  io.regs_reg1_read_address := Mux(opcode === Instructions.lui, 0.U(Parameters.PhysicalRegisterAddrWidth), rs1)//opcode=instruction.lui則設為0
   io.regs_reg2_read_address := rs2
   val immediate = MuxLookup(
     opcode,
@@ -195,7 +195,8 @@ class InstructionDecode extends Module {
   )
 
   // lab3(InstructionDecode) begin
-
+  io.memory_read_enable := opcode === InstructionTypes.L
+  io.memory_write_enable := opcode === InstructionTypes.S
   // lab3(InstructionDecode) end
 
   io.wb_reg_write_source := MuxCase(
