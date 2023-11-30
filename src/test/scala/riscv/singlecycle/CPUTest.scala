@@ -78,6 +78,22 @@ class FibonacciTest extends AnyFlatSpec with ChiselScalatestTester {
     }
   }
 }
+class Hw3Test extends AnyFlatSpec with ChiselScalatestTester {
+  behavior.of("Single Cycle CPU")
+  it should "Sum of Leading Zeros in Linked List by CLZ" in {
+    test(new TestTopModule("hw3_liu.asmbin")).withAnnotations(TestAnnotations.annos) { c =>
+      for (i <- 1 to 1000) {
+        c.clock.step()
+        c.io.mem_debug_read_address.poke((i * 4).U) // Avoid timeout
+      }
+   
+        c.io.mem_debug_read_address.poke(4.U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(19.U)
+        
+      }
+  }
+}
 
 class QuicksortTest extends AnyFlatSpec with ChiselScalatestTester {
   behavior.of("Single Cycle CPU")
