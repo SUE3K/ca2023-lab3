@@ -80,7 +80,7 @@ class FibonacciTest extends AnyFlatSpec with ChiselScalatestTester {
 }
 class Hw3Test extends AnyFlatSpec with ChiselScalatestTester {
   behavior.of("Single Cycle CPU")
-  it should "Sum of Leading Zeros in Linked List by CLZ" in {
+  it should "HW2-RISC-V" in {
     test(new TestTopModule("hw3_liu.asmbin")).withAnnotations(TestAnnotations.annos) { c =>
       for (i <- 1 to 1000) {
         c.clock.step()
